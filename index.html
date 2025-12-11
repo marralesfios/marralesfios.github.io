@@ -3,15 +3,161 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <link rel="stylesheet" href="page.css">
-        <title>Marr-Ales-Fios</title>
+        <title>maf-zske</title>
+        <style>
+            html.invert{
+                background-color: white;
+                color: black;
+            }
+            body{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100vw;
+                margin: .5lh auto;
+                gap: .8lh;
+            }
+            main{
+                width: 70vw;
+            }
+            #quote{
+                font-size: 125%;
+                line-height: 0.8;
+                font-weight: bold;
+            }
+            .ctc{
+                cursor: pointer;
+                &:not(.no-ctc-hint)::after{
+                    content: " (click to copy)";
+                    color: grey;
+                }
+            }
+            .star::before{
+                color: goldenrod;
+                content: "★";
+            }
+            button{
+                appearance: none;
+                border: none;
+                background-color: darkgrey;
+                &:hover{
+                    background-color: lightgrey;
+                }
+                &:active{
+                    background-color: grey;
+                }
+            }
+            #light{
+                display: block;
+                margin: 0 auto;
+                font-size: 14pt;
+            }
+        </style>
+        <script>
+addEventListener("DOMContentLoaded",() => {
+    for(const el of document.getElementsByClassName("ctc")){
+        el.addEventListener("click",async () => {
+            await navigator.clipboard.writeText(el.textContent);
+        });
+    }
+    document.getElementById("light").addEventListener("click",() => {
+        document.documentElement.classList.toggle("invert");
+    });
+});
+        </script>
     </head>
     <body>
-<p>
-Hi! I'm maf, and you can call me Marr.
-I like programming, and also play a <a href="/games.html">wide variety of computer games</a>.
-</p>
-<p>
-This page is under construction. More content will be available soon. In the meantime, check out my <a href="/blog">blog</a> or my project, <a href="/bubble">the Bubble</a>.
-</p>
+        <div>
+            <blockquote id="quote">
+                If you fear the dark because of the shadows, why not just turn off the light?
+            </blockquote>
+            <!-- <p class="source">— maf, 2025-09</p>     -->
+        </div>
+        <main>
+            <button id="light">Light switch</button>
+            <p>
+    Hi, I'm Marr-Ales-Fios, or maf for short.
+            </p>
+            <p>
+I like programming, and I have over 4 years of experience in both C++ and Python, while also having decent knowledge in TypeScript and Snap<i>!</i>. I also like to mess around with Dyalog APL. I'm currently making a compiler & IDE for a custom programming languge.
+            </p>
+            <details>
+                <summary>Things I play</summary>
+<ul>
+<li>the piano (I never said they were only video games, did I?)</li>
+<h3>Sandbox</h3>
+    <li>Minecraft (Vanilla 1.15.2; Sky Factory 4 on 1.12.2)</li>
+    <li>No Man's Sky</li>
+<h3>Factory / Automation</h3>
+    <li>Mindustry</li>
+    <li>Factorio</li>
+    <li class="star">Dyson Sphere Program</li>
+<h3>Puzzle</h3>
+    <li>Baba Is You</li>
+    <li>Patrick's Parabox</li>
+    <li>Portal (1, 2)</li>
+    <li>Isoball X1 (flash)</li>
+    <li>Mobile Suit Baba</li>
+    <li>I Wanna Lockpick DEMO</li>
+    <li>Liquid Measure (1, 2, 2DFLP, 3, 3PP, 3CP) (flash)</li>
+    <li class="star">Electric Box (1, 2) (flash)</li>
+    <li>Snakebird</li>
+<h3>Rhythm</h3>
+    <li>A Dance of Fire and Ice</li>
+    <li>vivid/stasis</li>
+    <li>Quaver</li>
+<h3>Local co-op</h3>
+    <li>Overcooked! (1, 2)</li>
+    <li>Fireboy & Watergirl (1-5)</li>
+<h3>Physics / Simulation</h3>
+    <li>Beseige</li>
+    <li>Kerbal Space Program (1)</li>
+    <li>Poly Bridge (2)</li>
+<h3>Card games</h3>
+    <li>Slay the Spire</li>
+    <li>Monster Train</li>
+    <li>Hearthstone</li>
+    <li>Stacklands</li>
+<h3>Board games</h3>
+    <li class="star">Wingspan</li>
+    <li>Root</li>
+<h3>Language</h3>
+    <li class="star">Chants of Sennaar</li>
+<h3>Tower Defense</h3>
+    <li>Mindustry</li>
+    <li>The Perfect Tower (II)</li>
+    <li>Rogue Tower</li>
+    <li>Minecraft Tower Defense (flash)</li>
+    <li>20 Waves (flash)</li>
+<h3>Base building & Survival</h3>
+    <li>Kingdom: Two Crowns</li>
+    <li class="star">Planet Noevo (II) (flash)</li>
+<h3>Driving</h3>
+    <li>Need for Speed: Heat</li>
+    <li>American Truck Simulator</li>
+<h3>Idle</h3>
+    <li>The Perfect Tower (II)</li>
+    <li>Instruction</li>
+    <li><a href="https://faedine.com/games/goodpoints/">Good points</a></li>
+<h3>RTS</h3>
+    <li>Mindustry</li>
+    <li>Age of Empires (II + Conquerors expansion)</li>
+<h3>Miscellaneous</h3>
+    <li>Chess Evolved Online; Chess-like</li>
+    <li>Awesome tanks 1, 2 (flash)</li>
+    <li>Cities: Skylines; City Builder</li>
+    <li>Sandtrix; Tetris</li>
+
+    <br>
+    ... and so many more flash games that left unforgettable memories but which
+I forgot the names of ...
+</ul>
+            </details>
+            <section>
+                <h2>Contact</h2>
+                <p>Discord: @<span class="ctc">marr_ales_fios</span></p>
+                <p>E-mail: <span class="ctc no-ctc-hint">Programmer00001H@gmail.com</span> <span style="color: darkgrey;">or</span> <span class="ctc">marralesfios@gmail.com</span></p>
+            </section>
+        </main>
     </body>
 </html>
