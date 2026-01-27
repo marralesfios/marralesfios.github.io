@@ -1,7 +1,7 @@
 html{
     background-color: black;
     color: white;
-    font-size: 23pt;
+    font-size: 19pt;
 }
 blockquote{
     &::before{

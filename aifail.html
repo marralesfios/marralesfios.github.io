@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="page.css">
+        <link rel="stylesheet" href="article.css">
+        <title>AI Fails</title>
+        <script src="article.js"></script>
+        <style>
+            p>img{
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <blockquote id="quote">
+                Artificial "Intelligence" is an insult to computers.
+            </blockquote>
+            <p class="source">— maf</p>    
+        </div>
+        <main>
+            <button id="light">Light switch</button>
+            <h1>AI Fails</h1>
+            <p>
+Here are some question that AI still can't answer correctly. If AI technology has improved, please drop me an email so I can update the page. (NOTE: sometimes the AI mistakes are intermittent/random, so please test multiple times!)
+            </p>
+            <ul>
+                <li>
+                    <h2>What does 8D C0 in x86 machine code do?</h2>
+                    <a href="https://chatgpt.com/share/69781fff-6ecc-8000-82ec-803c4526f006">ChatGPT</a>
+                    <p>
+ChatGPT says that this instruction is a NOP, which is wrong. The <a href="https://www.felixcloutier.com/x86/lea">LEA</a> instruction takes a register and a memory address. The following is an excerpt from the <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html">Intel SDM</a>: <img src="32bitamode.png" width="441.2" height="427.2">
+As you can see, ModR/M byte C0 corresponds to the register argument EAX (from the cell containing C0, go up to the top header) and the register or memory argument (read left, to the column that says "Effective Address") of register EAX. Notably, EAX is a register, not a memory address, so this instruction is invalid. Reading from the "Protected Mode Exceptions" table below, exception #UD (invalid instruction) is raised. In effect, this is the same as the <code>UD2</code> instruction, not <code>NOP</code>.
+                    </p>
+                </li>
+            </ul>
+        </main>
+    </body>
+</html>
