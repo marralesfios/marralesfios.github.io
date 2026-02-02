@@ -10,6 +10,13 @@
             p>img{
                 display: block;
             }
+            code{
+                white-space: pre;
+            }
+            .code-insert{
+                font-family: serif;
+                color: gray;
+            }
         </style>
     </head>
     <body>
@@ -32,6 +39,19 @@ Here are some question that AI still can't answer correctly. If AI technology ha
                     <p>
 ChatGPT says that this instruction is a NOP, which is wrong. The <a href="https://www.felixcloutier.com/x86/lea">LEA</a> instruction takes a register and a memory address. The following is an excerpt from the <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html">Intel SDM</a>: <img src="32bitamode.png" width="441.2" height="427.2">
 As you can see, ModR/M byte C0 corresponds to the register argument EAX (from the cell containing C0, go up to the top header) and the register or memory argument (read left, to the column that says "Effective Address") of register EAX. Notably, EAX is a register, not a memory address, so this instruction is invalid. Reading from the "Protected Mode Exceptions" table for the LEA instruction, we see that exception #UD (invalid instruction) is raised in this case. In effect, this is the same as the <code>UD2</code> instruction, not <code>NOP</code>.
+                    </p>
+                </li>
+                <li>
+                    <h2>Does the following Python code crash? If so, how? If not, what's the output?</h2>
+                    <code lang="python3">try:
+    raise Exception()
+except Exception as __builtins__:
+    pass
+print(type(__builtins__))</code>
+                    <a href="https://chatgpt.com/share/6980b8b6-f628-8000-b3fb-b9bb279badf8">ChatGPT</a>
+                    <a href="https://chatgpt.com/share/6980b8b6-f628-8000-b3fb-b9bb279badf8">ChatGPT (retry)</a>
+                    <p>
+ChatGPT claims that <samp lang="python3">&lt;class 'Exception'&gt;</samp> would be printed, since the <code lang="python3">except Exception as __builtins__:</code> line is run and assigns the resulting exception object to <code lang="python3">__builtins__</code>. This is true, however at the end of an exception handler clause, Python runs the equivalent of <code lang="python3">del <i class="code-insert">excCapture</i></code>, as a bandaid for not having proper scopes for exception handlers. This causes the shadowing <code lang="python3">__builtins__</code> to be deleted, and interestingly (at least on CPython), replaces the global <code lang="python3">__builtins__</code> object with its instance dict, as if <code lang="python3">__builtins__ = vars(__builtins__)</code> has been run. Thus, <samp lang="python3">&lt;class 'dict'&gt;</samp> is the final output.
                     </p>
                 </li>
             </ul>
