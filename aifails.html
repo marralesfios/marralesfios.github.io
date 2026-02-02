@@ -49,7 +49,6 @@ except Exception as __builtins__:
     pass
 print(type(__builtins__))</code>
                     <a href="https://chatgpt.com/share/6980b8b6-f628-8000-b3fb-b9bb279badf8">ChatGPT</a>
-                    <a href="https://chatgpt.com/share/6980b8b6-f628-8000-b3fb-b9bb279badf8">ChatGPT (retry)</a>
                     <p>
 ChatGPT claims that <samp lang="python3">&lt;class 'Exception'&gt;</samp> would be printed, since the <code lang="python3">except Exception as __builtins__:</code> line is run and assigns the resulting exception object to <code lang="python3">__builtins__</code>. This is true, however at the end of an exception handler clause, Python runs the equivalent of <code lang="python3">del <i class="code-insert">excCapture</i></code>, as a bandaid for not having proper scopes for exception handlers. This causes the shadowing <code lang="python3">__builtins__</code> to be deleted, and interestingly (at least on CPython), replaces the global <code lang="python3">__builtins__</code> object with its instance dict, as if <code lang="python3">__builtins__ = vars(__builtins__)</code> has been run. Thus, <samp lang="python3">&lt;class 'dict'&gt;</samp> is the final output.
                     </p>
