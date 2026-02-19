@@ -1,7 +1,3 @@
-html.invert{
-    background-color: white;
-    color: black;
-}
 body{
     display: flex;
     flex-direction: column;
@@ -18,21 +14,39 @@ main{
     line-height: 0.8;
     font-weight: bold;
 }
+input{
+    appearance: none;
+    border: 1px solid var(--fg-color);
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+}
 button{
     appearance: none;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
     border: none;
-    background-color: darkgrey;
+    padding: 3px;
+    padding-inline: 5px;
+    box-sizing: border-box;
     &:hover{
-        background-color: lightgrey;
+        filter: brightness(1.15);
+    }
+    &:focus-visible{
+        filter: brightness(1.5);
+        outline: none;
     }
     &:active{
-        background-color: grey;
+        filter: brightness(0.8);
     }
 }
-#light{
+#light, #accentbox{
     display: block;
     margin: 0 auto;
     font-size: 14pt;
+}
+#accentbox{
+    margin-top: 10px;
+    width: fit-content;
 }
 img{
     cursor: pointer;

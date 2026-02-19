@@ -1,6 +1,15 @@
 html{
-    background-color: black;
-    color: white;
+    --bg-color: black;
+    --fg-color: white;
+    --default-accent-color: darkgrey;
+    --accent-color: var(--default-accent-color);
+    &.invert{
+        --bg-color: white;
+        --accent-color: rgb(from var(--default-accent-color) calc(255 - r) calc(255 - g) calc(255 - b) );
+        --fg-color: black;
+    }
+    background-color: var(--bg-color);
+    color: var(--fg-color);
     font-size: 19pt;
 }
 blockquote{

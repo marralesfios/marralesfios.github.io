@@ -1,6 +1,16 @@
 "use strict";
-let lit = localStorage.getItem("lit") === "1";
-function set_page() {
+let lit;
+let accent;
+function set_lightness(to) {
+    if (to) {
+        localStorage.setItem("lit", "1");
+    }
+    else {
+        localStorage.removeItem("lit");
+    }
+    lit = to;
+}
+function style_lightness() {
     if (lit) {
         document.documentElement.classList.add("invert");
     }
@@ -8,20 +18,33 @@ function set_page() {
         document.documentElement.classList.remove("invert");
     }
 }
-set_page();
-addEventListener("DOMContentLoaded", () => {
-    document.getElementById("light").addEventListener("click", () => {
-        if (lit = !lit) {
-            localStorage.setItem("lit", "1");
-        }
-        else {
-            localStorage.removeItem("lit");
-        }
-        set_page();
-    });
-    for (const el of document.getElementsByTagName("img")) {
-        el.addEventListener("click", () => {
-            window.open(el.src);
-        });
-    }
+lit = (localStorage.getItem("lit") === "1");
+style_lightness();
+function set_accent(to) {
+    accent = to;
+    localStorage.setItem("accent-color", to);
+}
+function style_accent() {
+    document.documentElement.style.setProperty("--accent-color", accent);
+}
+accent = (localStorage.getItem("accent-color") ?? "");
+style_accent();
+document.getElementById("light").addEventListener("click", () => {
+    set_lightness(!lit);
+    style_lightness();
 });
+for (const el of document.getElementsByTagName("img")) {
+    el.addEventListener("click", () => {
+        window.open(el.src);
+    });
+}
+const accbox = document.getElementById("accent");
+if (accbox !== null) {
+    accbox.value = accent;
+    accbox.addEventListener("input", () => {
+        if (accbox.value === "" || CSS.supports("color", accbox.value)) {
+            set_accent(accbox.value);
+            style_accent();
+        }
+    });
+}

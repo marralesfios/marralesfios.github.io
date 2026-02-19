@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="page.css">
+        <link rel="stylesheet" href="article.css">
+        <title>musi Ako a</title>
+        <style>
+            #musi{
+                display: flex;
+                flex-direction: column;
+                width: fit-content;
+                gap: 0.3lh;
+                align-items: flex-start;
+            }
+            .hori{
+                display: flex;
+                gap: 4px;
+                align-items: center;
+            }
+            #scode{
+                height: 1lh;
+                min-width: 10ch;
+            }
+            p{
+                margin: 0;
+            }
+            #err{
+                color: red;
+            }
+            hr{
+                width: 30%;
+            }
+        </style>
+        <script type="module" src="article.js"></script>
+        <script type="module" src="ako.js"></script>
+    </head>
+    <body>
+        <div>
+            <blockquote id="quote">
+                sitelen "u" li lon musi ako. nasin pona la o kepeken nimi Utala. nasin ike la o kepeken nimi Unpa.
+            </blockquote>
+            <p class="source">— <a target="_blank" href="ako.png">sitelen musi tan jan Walan Kemawi</a></p>
+        </div>
+        <main>
+            <button id="light">ante suno</button>
+            <div id="accentbox">
+                <label for="accent">kule:</label>
+                <input type="text" id="accent" autocomplete="off">
+            </div>
+            <h1>musi Ako</h1>
+            <p id="err"></p>
+            <div id="musi">
+                <button id="open">o open musi</button>
+                <div class="hori">
+                    <input id="scode"></input><button id="paste-scode">o pana</button><button id="copy-scode">o jo</button>
+                </div>
+                <hr>
+                <p>
+                    <i>o pana e toki kepeken open ni: </i><b><span id="opener"></span></b>
+                </p>
+                <div class="hori">
+                    <input type="text" id="akobox" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+                    <button id="ako">o pana</button>
+                </div>
+                <div id="candidates"></div>
+            </div>
+        </main>
+    </body>
+</html>
+
