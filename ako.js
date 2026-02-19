@@ -52,7 +52,7 @@ const cand_div = document.getElementById("candidates");
 let candidates = [];
 function render_candidate(cand) {
     const el = document.createElement("p");
-    el.textContent = cand.map(i => CHARSET[i]).join("");
+    el.textContent = cand.map(i => CHARSET[i]).join("").trim();
     return el;
 }
 function clear_candidates() {

@@ -51,7 +51,7 @@ const cand_div = document.getElementById("candidates") as HTMLDivElement;
 let candidates: number[][] = [];
 function render_candidate(cand: number[]): HTMLParagraphElement{
     const el = document.createElement("p");
-    el.textContent = cand.map(i => CHARSET[i]).join("");
+    el.textContent = cand.map(i => CHARSET[i]).join("").trim();
     return el;
 }
 function clear_candidates(){
