@@ -10,8 +10,6 @@ main{
     width: 70vw;
 }
 #quote{
-    /* font-size: 125%; */
-    line-height: 0.8;
     font-weight: bold;
 }
 input{
@@ -19,6 +17,10 @@ input{
     border: 1px solid var(--fg-color);
     background-color: var(--bg-color);
     color: var(--fg-color);
+    &:focus-visible{
+        border-color: var(--accent-color);
+        outline: none;
+    }
 }
 button{
     appearance: none;

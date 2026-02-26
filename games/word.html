@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="../page.css">
+        <link rel="stylesheet" href="../article.css">
+        <title>maf-zske</title>
+        <script type="module" src="../article.js"></script>
+        <style>
+            .input{
+                font-family: monospace;
+                font-size: inherit;
+                margin-inline: 0.1ch;
+                color: inherit;
+            }
+            .var{
+                font-family: serif;
+                font-style: italic;
+                color: darkgray;
+            }
+            p:has(>.input[data-correct="false"]){
+                color: red;
+            }
+            p:has(>.input):not(:has(.input:not([data-correct="true"]))){
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <blockquote id="quote">
+                If a human,<br>
+                can't hear the voice of others;<br>
+                nor do they remember the human language.<br>
+                Then are they...<br>
+                still human?
+            </blockquote>
+            <p class="source">— 《文字遊戲》(Word Game)</p>    
+            <script type="module" src="word.js"></script>
+        </div>
+        <main>
+            <button id="light">Light switch</button>
+            <div id="accentbox">
+                <label for="accent">color:</label>
+                <input type="text" id="accent" autocomplete="off">
+            </div>
+            <p>foot:human = wheel:car</p>
+            <p>blade:fan = key:keyboard</p>
+            <p>dictionary:word = <input type="text" class="input" data-ans="thesaurus">:synonym</p>
+            <p>delay:postpone = postfix:<input type="text" class="input" data-ans="suffix"></p>
+            <p>head+torso+limbs = body</p>
+            <p>proton+electron = hydrogen</p>
+            <p>wood+graphite = <input type="text" class="input" data-ans="pencil"></p>
+            <p>paper+sketch = <input type="text" class="input" data-ans="blueprint"></p>
+            <p>straw×fire = ash</p>
+            <p>film×light = photo</p>
+            <p>seawater×sunlight = water vapor+<input type="text" class="input" data-ans="salt"></p>
+            <p>line:plane = area:<span class="var">x</span>, fat chance:slim chance = [<span class="var">x</span>]:loudness (<span class="var">x</span> = volume)</p>
+            <p>start:begin = waiter:<span class="var">x</span>, peripheral:computer = <input type="text" class="input" data-ans="client">:[<span class="var">x</span>]</p>
+            <p>wordiness:verbosity = refuse:<span class="var">x</span>, [<span class="var">x</span>] = [<span class="var">y</span>], <span class="var">y</span> = autumn (<span class="var">x</span> = <input type="text" class="input" data-ans="decline">)</p>
+            <p>"jelly"+"fish" = "jellyfish"</p>
+            <p>{"sea"+"star"}:{"star"+#<span class="var">x</span>} = same:identical (<span class="var">x</span> = fish)</p>
+        </main>
+    </body>
+</html>
