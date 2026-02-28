@@ -12,9 +12,9 @@ for(const input of document.getElementsByClassName("input") as HTMLCollectionOf<
     input.after(hint);
     input.autocomplete = "off";
     input.autocapitalize = "off";
-    input.value = localStorage.getItem(input.id) ?? "";
+    input.value = localStorage.getItem("__wordgame_ans_"+input.id) ?? "";
     function update(){
-        localStorage.setItem(input.id,input.value = input.value.toLowerCase());
+        localStorage.setItem("__wordgame_ans_"+input.id,input.value = input.value.toLowerCase());
         input.style.width = `${Math.max(ans.length,input.value.length)}ch`;
         if(input.value.length < ans.length){
             input.removeAttribute("data-correct");
