@@ -11,7 +11,7 @@
                 display: block;
             }
             code{
-                white-space: pre;
+                white-space: pre-wrap;
             }
             .code-insert{
                 font-family: serif;
@@ -37,11 +37,11 @@
 Here are some question that AI still can't answer correctly. If AI technology has improved, please drop me an email so I can update the page. (NOTE: sometimes the AI mistakes are intermittent/random, so please test multiple times!)
             </p>
             <ul>
-                <li>
+                <p>
                     <h2>What does 8D C0 in x86 machine code do?</h2>
-                    <a href="https://chatgpt.com/share/69781fff-6ecc-8000-82ec-803c4526f006">ChatGPT</a>
+                    </p><a href="https://chatgpt.com/share/69781fff-6ecc-8000-82ec-803c4526f006">ChatGPT</a></p>
                     <p>
-ChatGPT says that this instruction is a NOP, which is wrong. The <a href="https://www.felixcloutier.com/x86/lea">LEA</a> instruction takes a register and a memory address. The following is an excerpt from the <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html">Intel SDM</a>: <img src="32bitamode.png" width="441.2" height="427.2">
+ChatGPT says that this instruction is effectively a NOP, which is wrong. 8D corresponds to the <a href="https://www.felixcloutier.com/x86/lea">LEA</a> instruction, which takes a register and a memory address, both encoded in the ModR/M byte (C0 in this case). Here's the ModR/M encoding table from the <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html">Intel SDM</a>: <img src="32bitamode.png" width="441.2" height="427.2">
 As you can see, ModR/M byte C0 corresponds to the register argument EAX (from the cell containing C0, go up to the top header) and the register or memory argument (read left, to the column that says "Effective Address") of register EAX. Notably, EAX is a register, not a memory address, so this instruction is invalid. Reading from the "Protected Mode Exceptions" table for the LEA instruction, we see that exception #UD (invalid instruction) is raised in this case. In effect, this is the same as the <code>UD2</code> instruction, not <code>NOP</code>.
                     </p>
                 </li>
@@ -52,11 +52,21 @@ As you can see, ModR/M byte C0 corresponds to the register argument EAX (from th
 except Exception as __builtins__:
     pass
 print(type(__builtins__))</code>
-                    <a href="https://chatgpt.com/share/6980b8b6-f628-8000-b3fb-b9bb279badf8">ChatGPT</a>
+                    <p><a href="https://chatgpt.com/share/6980b8b6-f628-8000-b3fb-b9bb279badf8">ChatGPT</a></p>
                     <p>
-ChatGPT claims that <samp lang="python3">&lt;class 'Exception'&gt;</samp> would be printed, since the <code lang="python3">except Exception as __builtins__:</code> line is run and assigns the resulting exception object to <code lang="python3">__builtins__</code>. This is true, however at the end of an exception handler clause, Python runs the equivalent of <code lang="python3">del <i class="code-insert">excCapture</i></code>, as a bandaid for not having proper scopes for exception handlers. This causes the shadowing <code lang="python3">__builtins__</code> to be deleted, and interestingly* (at least on CPython), replaces the global <code lang="python3">__builtins__</code> object with its instance dict, as if <code lang="python3">__builtins__ = vars(__builtins__)</code> has been run. Thus, <samp lang="python3">&lt;class 'dict'&gt;</samp> is the final output.
+ChatGPT claims that <samp lang="python3">&lt;class 'Exception'&gt;</samp> would be printed, since the <code lang="python3">except Exception as __builtins__:</code> line is run and assigns the resulting exception object to <code lang="python3">__builtins__</code>. This is true, however at the end of an exception handler clause, Python runs the equivalent of <code lang="python3">del <i class="code-insert">excCapture</i></code>, as a bandaid for not having proper scopes for exception handlers. This causes the shadowing <code lang="python3">__builtins__</code> to be deleted, and interestingly (at least on CPython), replaces the global <code lang="python3">__builtins__</code> object with its instance dict*, as if <code lang="python3">__builtins__ = vars(__builtins__)</code> has been run. Thus, <samp lang="python3">&lt;class 'dict'&gt;</samp> is the final output.
                     </p>
                     <p><small>* I've done some more research, and it seems that the dict <code lang="python3">__builtins__</code> is always there, but in the <code lang="python3">__main__</code> module and there only, the equivalent of <code lang="python3">import builtins as __builtins__</code> has been run before your code executes. In any case, <code lang="python3">del</code>-eting the dict multiple times won't cause a crash and so whether you're in the main module doesn't actually affect the outcome.</small></p>
+                </li>
+                <li>
+                    <h2>What's the output of the following Python code?</h2>
+                    <code lang="python3">class Abomination(zip("Hello, "), zip("world!")):
+    pass
+print(*map("".join, map(__import__("functools").partial(sum, start=()), map(list, map(__import__("operator").itemgetter(1),Abomination)))), sep="")</code>
+                    <p><a href="https://chatgpt.com/s/t_69ed0114e24c8191b392788d511e07b6">ChatGPT</a></p>
+                    <p>
+ChatGPT says that the code is erroneous, and that seems like a reasonable judgement (what is <code lang="python3">zip</code> doing in the superclass list?!?!). However, it actually works (at least on CPython)! Normally, if you write <code lang="python3">class A(B):</code>, then class A will inherit the metaclass of class B as well. If you derive from two classes, Python will check that the metaclasses are compatible. Recall that a type's metaclass is just the type of the type, e.g. <code lang="python3">type(int) is type</code> tells us that the metaclass of <code lang="python3">int</code> is <code lang="python3">type</code>. So, what's the metaclass of our (aptly named) <code lang="python3">Abomination</code>? Well, <code lang="python3">zip</code> is a class, so the two "base classes" are just <code lang="python3">zip</code> objects. This means the metaclass of <code lang="python3">Abomination</code> is the <code lang="python3">zip</code> class! Therefore, the class definition is equivalent to <code lang="python3">Abomination = zip("Abomination", (zip("Hello, "), zip("world!")), <i class="code-insert">magicProps</i>)</code>, where <code lang="python3"><i class="code-insert">magicProps</i></code> includes various dunder methods. Recalling that <code lang="python3">zip</code> stops when the shortest iterable runs out, we can see that <code lang="python3">Abomination</code> would yield two values, <code lang="python3">("A", zip("Hello, "), <i class="code-insert">magicPropName1</i>)</code> and <code lang="python3">("b", zip("world!"), <i class="code-insert">magicPropName2</i>)</code>. We first map <code lang="python3">itemgetter(1)</code> over <code lang="python3">Abomination</code>, which extracts the second item of these two tuples, namely <code lang="python3">zip("Hello, ")</code> and <code lang="python3">zip("world!")</code>. We then map the <code lang="python3">sum</code> function bound to an empty tuple over each of those <code lang="python3">zip</code> objects. With a single argument, <code lang="python3">zip("abc")</code> (for example) yields tuples <code lang="python3">("a",)</code>, <code lang="python3">("b",)</code> and <code lang="python3">("c",)</code>, and <code lang="python3">sum</code> basically concatenates these tuples into one, giving us <code lang="python3">("a", "b", "c")</code>. This transformation is applied to the strings <code lang="python3">"Hello, "</code> and <code lang="python3">"world!"</code>, giving us <code lang="python3">tuple("Hello, ")</code> and <code lang="python3">tuple("world!")</code> respectively. We finally apply <code lang="python3">"".join()</code> to the combined tuples to turn them into strings, and they are both passed into <code lang="python3">print</code>, with no separator in between. The final effect is, of course, identical to <code lang="python3">print("Hello, world!")</code>.
+                    </p>
                 </li>
             </ul>
         </main>
