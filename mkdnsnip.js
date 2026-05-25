@@ -9,6 +9,9 @@ function column(things) {
 function graphref(id) {
     return { type: "graph-cell", attrs: { id } };
 }
+function sliderref(id) {
+    return { type: "slider-cell", attrs: { id } };
+}
 genb.addEventListener("click", async () => {
     const n = ibox.valueAsNumber;
     if (Number.isNaN(n)) {
@@ -23,7 +26,6 @@ genb.addEventListener("click", async () => {
             calculatorState: {
                 version: 11,
                 randomSeed: "",
-                expressions: { list: [] },
                 graph: {
                     viewport: {
                         xmin: -10,
@@ -31,7 +33,8 @@ genb.addEventListener("click", async () => {
                         ymin: -10,
                         ymax: 10
                     }
-                }
+                },
+                expressions: { list: [] }
             }
         });
     }

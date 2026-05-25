@@ -1,17 +1,19 @@
-import type { CalculatorState2D } from "./desmos";
+import type { CalculatorState } from "./desmos";
 const ibox = document.getElementById("ncol") as HTMLInputElement;
 const genb = document.getElementById("gen") as HTMLButtonElement;
-type GraphCell = {
-    type: "graph-cell",
+type ReferenceCell<T extends string> = {
+    type: T,
     attrs: { id: number }
 };
+type GraphCell = ReferenceCell<"graph-cell">;
+type SliderCell = ReferenceCell<"slider-cell">;
 type ContainerCell<T extends string> = {
     type: T,
     content: Cell[]
 };
 type ColumnCell = ContainerCell<"column">;
 type RowCell = ContainerCell<"row">;
-type Cell = GraphCell | ColumnCell | RowCell;
+type Cell = GraphCell | SliderCell | ColumnCell | RowCell;
 function row(things: Cell[]): RowCell{
     return {type: "row", content: things};
 }
@@ -21,12 +23,22 @@ function column(things: Cell[]): ColumnCell{
 function graphref(id: number): GraphCell{
     return {type: "graph-cell", attrs: {id}};
 }
+function sliderref(id: number): SliderCell{
+    return {type: "slider-cell", attrs: {id}};
+}
 type HasID = { id: string; };
 type GraphCellData = HasID & {
     type: "graph-cell",
-    calculatorState: CalculatorState2D
+    calculatorState: CalculatorState
 };
-type CellData = GraphCellData;
+type SliderCellData = HasID & {
+    type: "slider-cell",
+    showLabel: boolean,
+    label?: string,
+    showValue: boolean,
+    variable: string
+}
+type CellData = GraphCellData | SliderCellData;
 type NotebookData = {
     slice: { content: Cell[] },
     cells: {
@@ -48,7 +60,6 @@ genb.addEventListener("click",async () => {
             calculatorState: {
                 version: 11,
                 randomSeed: "",
-                expressions: { list: [] },
                 graph: {
                     viewport: {
                         xmin: -10,
@@ -56,7 +67,8 @@ genb.addEventListener("click",async () => {
                         ymin: -10,
                         ymax: 10
                     }
-                }
+                },
+                expressions: { list: [] }
             }
         });
     }
