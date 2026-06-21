@@ -1,3 +1,4 @@
+import { copy_snippet } from "./desmos/libdesmos.js";
 const ibox = document.getElementById("ncol");
 const genb = document.getElementById("gen");
 function row(things) {
@@ -8,9 +9,6 @@ function column(things) {
 }
 function graphref(id) {
     return { type: "graph-cell", attrs: { id } };
-}
-function sliderref(id) {
-    return { type: "slider-cell", attrs: { id } };
 }
 genb.addEventListener("click", async () => {
     const n = ibox.valueAsNumber;
@@ -38,24 +36,20 @@ genb.addEventListener("click", async () => {
             }
         });
     }
-    const data = {
-        type: "application/desmos-notebook+json",
+    await copy_snippet({
+        format: "dcg-notebook-slice",
         data: {
-            slice: {
-                content: [
-                    row(Array.from(cd, (_, id) => column([graphref(id)])))
-                ]
-            },
-            cells: Object.fromEntries(cd.entries())
+            type: "application/desmos-notebook+json",
+            data: {
+                slice: {
+                    content: [
+                        row(Array.from(cd, (_, id) => column([graphref(id)])))
+                    ]
+                },
+                cells: Object.fromEntries(cd.entries())
+            }
         }
-    };
-    const elem = document.createElement("div");
-    elem.setAttribute("data-dcg-clipboard-format", "dcg-notebook-slice");
-    elem.setAttribute("data-dcg-clipboard-payload", JSON.stringify(data));
-    await navigator.clipboard.write([new ClipboardItem({ "text/html": elem.outerHTML })]);
-    console.log(elem.outerHTML);
-    console.log(JSON.stringify(data));
+    });
     genb.textContent = "Copied!";
     setTimeout(() => { genb.textContent = "Copy snippet to clipboard"; }, 1000);
 });
-export {};

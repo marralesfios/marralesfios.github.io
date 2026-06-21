@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="page.css">
+        <link rel="stylesheet" href="article.css">
+        <title>Maf's Hot Takes Collection</title>
+        <script src="article.js"></script>
+    </head>
+    <body>
+        <div>
+            <blockquote id="quote">
+                Machines have less<sup><small>[sic]</small></sup> problems.  I'd like to be a machine.
+            </blockquote>
+            <p class="source">— Andy Warhol</p>    
+        </div>
+        <main>
+            <button id="light">Light switch</button>
+            <h1>Maf's Hot Takes Collection</h1>
+            <p>
+Here are some of my "hot" takes on various things. NOTE: The proposed solutions to many problems pointed out here <strong>don't currently exist</strong>. This page is meant to describe things we should work towards, not things you should start doing right now.
+            </p>
+            <details>
+                <summary>Strings are way, <em>way</em> overused in today's programs.</summary>
+                <p>
+There are two main ways strings are used: to identify things uniquely (i.e. as IDs), or to display to the user as part of UI. (A common example, program localization, uses strings in both of these ways; the former for translation keys, and the latter in the actual translation data files.) Both these usages have better replacements. For IDs, using numbers is almost always the better option when you don't have a ridiculous amount of objects to tag: 32-bit ints are small, and they are of fixed size, meaning you don't need to waste time on silly things like <code>strlen</code> or allocating heap memory to copy strings. If 64-bit ints or bigger are potentially needed, variable-length allocations are probably a must, but encodings like LEB128 will still give more bang for your buck because they can use the full value range and aren't restricted to only the printable ASCII characters (as text string IDs usually are). If you need to read them for debugging, just prepare a separate symbol table. That way, you don't need to ship it with the end application in prod. For user interfaces, while the most common and practical solution today is to just store the translated strings in some sort of mapping, this is incredibly wasteful: just imagine how many man-hours were wasted translating the text "OK" across every software ever localized. Instead, we should focus on making a generic way to encode intent, which can then be used to pragmatically generate natural-language text (as a standalone library). This not only means that translation work won't be duplicated, but also that translations will be generally more consistent across different products. Note that pragmatically parsing and understanding human languages is extremely difficult, since we need to account for <em>all</em> possible ways a meaning can be expressed; However, generating text only requires us to be able to produce <em>some</em> text that expresses the meaning clearly, which is much less difficult.
+                </p>
+            </details>
+            <details>
+                <summary>All</summary>
+            </details>
+        </main>
+    </body>
+</html>
