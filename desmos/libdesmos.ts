@@ -10,7 +10,40 @@ export type ContainerCell<T extends string> = {
 };
 export type ColumnCell = ContainerCell<"column">;
 export type RowCell = ContainerCell<"row">;
-export type Cell = GraphCell | SliderCell | ColumnCell | RowCell;
+export type TypesettingMark = {
+    type: "em" | "strong" | "code"
+};
+export type LinkMark = {
+    type: "link",
+    attrs: {
+        href: string,
+        title?: string
+    }
+};
+export type TextMark = TypesettingMark | LinkMark;
+export type TextNode = {
+    type: "text",
+    text: string,
+    marks?: TextMark[]
+};
+export type ButtonNode = {
+    type: "button",
+    attrs: {
+        action: string,
+        buttonColor?: string,
+        label?: string
+    }
+};
+export type ParagraphCell = {
+    type: "paragraph",
+    attrs: {
+        alignment: "left" | "center" | "right",
+        format: string
+    }
+    content: (TextNode|ButtonNode)[]
+};
+
+export type Cell = GraphCell | SliderCell | ColumnCell | RowCell | ParagraphCell;
 
 type HasID = { id: string; };
 export type GraphCellData = HasID & {

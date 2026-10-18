@@ -2,3 +2,7 @@
 node_modules
 tsconfig.tsbuildinfo
 aa/dict
+desmos/test.html
+desmos/dtest.ts
+desmos/dtest.js
+hot.html
